@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'auth_service.dart';
+import 'auth_styles.dart';
 import 'my_home_page.dart';
 import 'register_page.dart';
 
@@ -25,9 +26,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+        filter: ImageFilter.blur(
+          sigmaX: AuthStyles.backgroundBlurSigma,
+          sigmaY: AuthStyles.backgroundBlurSigma,
+        ),
         child: Container(
-          color: Colors.black.withOpacity(0.5), // added dark overlay
+          color: Colors.black.withOpacity(AuthStyles.backgroundOverlayOpacity),
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -100,31 +104,23 @@ class _LoginFormState extends State<LoginForm> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AuthStyles.panelBorderRadius),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              filter: ImageFilter.blur(
+                sigmaX: AuthStyles.panelBlurSigma,
+                sigmaY: AuthStyles.panelBlurSigma,
+              ),
               child: Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                padding: const EdgeInsets.all(AuthStyles.panelPadding),
+                decoration: AuthStyles.panelDecoration,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
                       controller: _loginController,
                       textInputAction: TextInputAction.next,
-                      style: const TextStyle(color: Colors.black87),
-                      decoration: InputDecoration(
-                        labelText: 'Login',
-                        labelStyle: const TextStyle(color: Colors.black87),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
+                      style: const TextStyle(color: AuthStyles.inputTextColor),
+                      decoration: AuthStyles.inputDecoration(label: 'Login'),
                     ),
                     const SizedBox(height: 12),
                     TextField(
@@ -132,16 +128,8 @@ class _LoginFormState extends State<LoginForm> {
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       onSubmitted: (_) => _submit(),
-                      style: const TextStyle(color: Colors.black87),
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: const TextStyle(color: Colors.black87),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
+                      style: const TextStyle(color: AuthStyles.inputTextColor),
+                      decoration: AuthStyles.inputDecoration(label: 'Password'),
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
@@ -156,15 +144,18 @@ class _LoginFormState extends State<LoginForm> {
                       alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        const Text("Don't have an account yet? "),
+                        const Text(
+                          "Don't have an account yet? ",
+                          style: AuthStyles.hintTextStyle,
+                        ),
                         InkWell(
                           onTap: () {
                             Navigator.of(context).pushNamed(RegisterPage.routeName);
                           },
                           child: Text(
                             'Register here',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                            style: const TextStyle(
+                              color: AuthStyles.linkColor,
                               decoration: TextDecoration.underline,
                             ),
                           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'auth_service.dart';
+import 'auth_styles.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = '/RegisterPage';
@@ -63,9 +64,12 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+        filter: ImageFilter.blur(
+          sigmaX: AuthStyles.backgroundBlurSigma,
+          sigmaY: AuthStyles.backgroundBlurSigma,
+        ),
         child: Container(
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withOpacity(AuthStyles.backgroundOverlayOpacity),
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -80,15 +84,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(AuthStyles.panelBorderRadius),
                       child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        filter: ImageFilter.blur(
+                          sigmaX: AuthStyles.panelBlurSigma,
+                          sigmaY: AuthStyles.panelBlurSigma,
+                        ),
                         child: Container(
-                          padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.8),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
+                          padding: const EdgeInsets.all(AuthStyles.panelPadding),
+                          decoration: AuthStyles.panelDecoration,
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -99,16 +103,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       child: TextField(
                                         controller: _firstNameController,
                                         textInputAction: TextInputAction.next,
-                                        style: const TextStyle(color: Colors.black87),
-                                        decoration: InputDecoration(
-                                          labelText: 'First name',
-                                          labelStyle: const TextStyle(color: Colors.black87),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                        ),
+                                        style: const TextStyle(color: AuthStyles.inputTextColor),
+                                        decoration: AuthStyles.inputDecoration(label: 'First name'),
                                       ),
                                     ),
                                     const SizedBox(width: 12),
@@ -116,16 +112,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       child: TextField(
                                         controller: _lastNameController,
                                         textInputAction: TextInputAction.next,
-                                        style: const TextStyle(color: Colors.black87),
-                                        decoration: InputDecoration(
-                                          labelText: 'Last name',
-                                          labelStyle: const TextStyle(color: Colors.black87),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                        ),
+                                        style: const TextStyle(color: AuthStyles.inputTextColor),
+                                        decoration: AuthStyles.inputDecoration(label: 'Last name'),
                                       ),
                                     ),
                                   ],
@@ -134,32 +122,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 TextField(
                                   controller: _usernameController,
                                   textInputAction: TextInputAction.next,
-                                  style: const TextStyle(color: Colors.black87),
-                                  decoration: InputDecoration(
-                                    labelText: 'Username',
-                                    labelStyle: const TextStyle(color: Colors.black87),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
+                                  style: const TextStyle(color: AuthStyles.inputTextColor),
+                                  decoration: AuthStyles.inputDecoration(label: 'Username'),
                                 ),
                                 const SizedBox(height: 12),
                                 TextField(
                                   controller: _emailController,
                                   keyboardType: TextInputType.emailAddress,
                                   textInputAction: TextInputAction.next,
-                                  style: const TextStyle(color: Colors.black87),
-                                  decoration: InputDecoration(
-                                    labelText: 'Email',
-                                    labelStyle: const TextStyle(color: Colors.black87),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
+                                  style: const TextStyle(color: AuthStyles.inputTextColor),
+                                  decoration: AuthStyles.inputDecoration(label: 'Email'),
                                 ),
                                 const SizedBox(height: 12),
                                 TextField(
@@ -167,16 +139,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   obscureText: true,
                                   textInputAction: TextInputAction.done,
                                   onSubmitted: (_) => _submit(),
-                                  style: const TextStyle(color: Colors.black87),
-                                  decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    labelStyle: const TextStyle(color: Colors.black87),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
+                                  style: const TextStyle(color: AuthStyles.inputTextColor),
+                                  decoration: AuthStyles.inputDecoration(label: 'Password'),
                                 ),
                                 const SizedBox(height: 16),
                                 SizedBox(

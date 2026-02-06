@@ -31,6 +31,13 @@ class AuthStyles {
   static BoxDecoration panelDecoration = BoxDecoration(
     color: Colors.white.withOpacity(panelOpacity),
     borderRadius: BorderRadius.circular(panelBorderRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 20,
+        offset: const Offset(0, 10),
+      ),
+    ],
   );
 
   static InputDecoration inputDecoration({required String label}) {

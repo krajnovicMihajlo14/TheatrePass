@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'auth_service.dart';
+import 'cart_page.dart';
 import 'fixtures_page.dart';
 import 'home_page.dart';
 import 'login_page.dart';
@@ -23,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _index = 0;
   PageController? _controller;
 
-  static const _titles = ['Home', 'Fixtures', 'Profile'];
+  static const _titles = ['Home', 'Fixtures', 'Cart', 'Profile'];
 
   @override
   void initState() {
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final pages = <Widget>[
       const HomePage(),
       const FixturesPage(),
+      const CartPage(),
       ValueListenableBuilder<bool?>(
         valueListenable: AuthService.instance.isLoggedIn,
         builder: (context, loggedIn, _) {
@@ -98,6 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIcon: Icon(Icons.sports_soccer),
               icon: Icon(Icons.sports_soccer_outlined),
               label: 'Fixtures',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.shopping_cart_outlined),
+              label: 'Cart',
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.person),

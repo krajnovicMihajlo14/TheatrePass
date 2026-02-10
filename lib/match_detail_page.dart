@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'auth_styles.dart';
+import 'models/cart_item.dart';
+import 'services/cart_service.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final String homeTeam;
@@ -371,7 +373,17 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                 child: ElevatedButton(
                                   onPressed: selectedTier != null
                                       ? () {
-                                          // Add to cart logic
+                                          // Add to cart
+                                          final cartItem = CartItem(
+                                            matchName: '${widget.homeTeam} vs ${widget.awayTeam}',
+                                            homeTeam: widget.homeTeam,
+                                            awayTeam: widget.awayTeam,
+                                            date: widget.date,
+                                            stand: selectedStand!,
+                                            tier: selectedTier!,
+                                            price: selectedPrice!,
+                                          );
+                                          CartService.instance.addItem(cartItem);
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(

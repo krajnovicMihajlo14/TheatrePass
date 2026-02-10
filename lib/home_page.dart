@@ -141,7 +141,7 @@ class HomePage extends StatelessWidget {
                                 "Manchester United",
                                 "Liverpool",
                                 "Sat, 15 Feb 2025",
-                                "assets/images/liverpool.png",
+                                "assets/images/liverpool-logo.png",
                               ),
                               const Divider(height: 24),
                               _buildMatchPreview(
@@ -149,7 +149,7 @@ class HomePage extends StatelessWidget {
                                 "Manchester United",
                                 "Chelsea",
                                 "Sat, 22 Feb 2025",
-                                "assets/images/chelsea.png",
+                                "assets/images/chelsea-logo.png",
                               ),
                             ],
                           ),

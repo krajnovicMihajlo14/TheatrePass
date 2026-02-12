@@ -3,6 +3,9 @@ import 'dart:ui';
 
 import 'auth_styles.dart';
 import '../services/cart_service.dart';
+import 'checkout_page.dart';
+import 'login_page.dart';
+import '../auth_service.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -287,12 +290,51 @@ class _CartPageState extends State<CartPage> {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          // Checkout logic
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Proceeding to checkout...'),
-                            ),
-                          );
+                          // Check if user is logged in
+                          if (AuthService.instance.isLoggedIn.value == true) {
+                            // Go to checkout
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CheckoutPage(),
+                              ),
+                            );
+                          } else {
+                            // Show login required dialog
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Login Required'),
+                                content: const Text(
+                                  'Please log in to proceed with checkout.',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const LoginPage(),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFFDA020E),
+                                      foregroundColor: Colors.white,
+                                    ),
+                                    child: const Text('Login'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFDA020E),

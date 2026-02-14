@@ -337,7 +337,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                               Text(
                                 selectedPrice != null
                                     ? 'Ticket Price: \$${selectedPrice!.toStringAsFixed(2)}'
-                                    : 'Tickets from \$70',
+                                    : 'Tickets from \$${widget.basePrice.toStringAsFixed(0)}',
                                 style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,

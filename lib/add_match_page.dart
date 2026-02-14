@@ -58,16 +58,41 @@ class _AddMatchPageState extends State<AddMatchPage> {
     return '${days[date.weekday % 7]}, ${date.day} ${months[date.month - 1]} ${date.year}';
   }
 
+  String _getOpponentLogo(String opponentName) {
+    final normalized = opponentName.toLowerCase().trim();
+    
+    final logoMap = {
+      'arsenal': 'assets/images/arsenal-logo.png',
+      'chelsea': 'assets/images/chelsea-logo.png',
+      'liverpool': 'assets/images/liverpool-logo.png',
+      'manchester city': 'assets/images/mancity-logo.png',
+      'man city': 'assets/images/mancity-logo.png',
+      'mancity': 'assets/images/mancity-logo.png',
+      'tottenham': 'assets/images/spurs-logo.png',
+      'spurs': 'assets/images/spurs-logo.png',
+      'tottenham hotspur': 'assets/images/spurs-logo.png',
+    };
+    
+    for (final entry in logoMap.entries) {
+      if (normalized.contains(entry.key)) {
+        return entry.value;
+      }
+    }
+    
+    return '';
+  }
+
   void _saveMatch() {
     if (_formKey.currentState!.validate()) {
+      final opponentName = _opponentController.text.trim();
       final match = Match(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         homeTeam: 'Manchester United',
-        awayTeam: _opponentController.text.trim(),
+        awayTeam: opponentName,
         date: _dateController.text.trim(),
         competition: _competitionController.text.trim(),
         basePrice: double.parse(_priceController.text.trim()),
-        opponentLogo: '',
+        opponentLogo: _getOpponentLogo(opponentName),
       );
 
       MatchesService.instance.addMatch(match);

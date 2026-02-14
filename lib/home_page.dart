@@ -3,12 +3,38 @@ import 'dart:ui';
 
 import 'auth_styles.dart';
 import 'match_detail_page.dart';
+import 'services/matches_service.dart';
+import 'models/match.dart' as match_model;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final matchesService = MatchesService.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    matchesService.addListener(_onMatchesChanged);
+  }
+
+  @override
+  void dispose() {
+    matchesService.removeListener(_onMatchesChanged);
+    super.dispose();
+  }
+
+  void _onMatchesChanged() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final matches = matchesService.matches;
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -136,21 +162,33 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              _buildMatchPreview(
-                                context,
-                                "Manchester United",
-                                "Liverpool",
-                                "Sat, 15 Feb 2025",
-                                "assets/images/liverpool-logo.png",
-                              ),
-                              const Divider(height: 24),
-                              _buildMatchPreview(
-                                context,
-                                "Manchester United",
-                                "Chelsea",
-                                "Sat, 22 Feb 2025",
-                                "assets/images/chelsea-logo.png",
-                              ),
+                              if (matches.isEmpty)
+                                const Text(
+                                  'No upcoming matches',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black54,
+                                  ),
+                                )
+                              else
+                                ...matches.asMap().entries.map((entry) {
+                                  final index = entry.key;
+                                  final match = entry.value;
+                                  return Column(
+                                    children: [
+                                      _buildMatchPreview(
+                                        context,
+                                        match.homeTeam,
+                                        match.awayTeam,
+                                        match.date,
+                                        match.opponentLogo ?? '',
+                                        match.basePrice,
+                                      ),
+                                      if (index < matches.length - 1)
+                                        const Divider(height: 24),
+                                    ],
+                                  );
+                                }),
                             ],
                           ),
                         ),
@@ -166,7 +204,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildMatchPreview(BuildContext context, String home, String away, String date, String opponentLogo) {
+  Widget _buildMatchPreview(BuildContext context, String home, String away, String date, String opponentLogo, double basePrice) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -177,6 +215,7 @@ class HomePage extends StatelessWidget {
               awayTeam: away,
               date: date,
               opponentLogo: opponentLogo,
+              basePrice: basePrice,
             ),
           ),
         );

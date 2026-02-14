@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'auth_styles.dart';
 import 'models/cart_item.dart';
+import 'models/match.dart';
 import 'services/cart_service.dart';
 
 class MatchDetailPage extends StatefulWidget {
@@ -10,6 +11,7 @@ class MatchDetailPage extends StatefulWidget {
   final String awayTeam;
   final String date;
   final String? opponentLogo;
+  final double basePrice;
 
   const MatchDetailPage({
     super.key,
@@ -17,6 +19,7 @@ class MatchDetailPage extends StatefulWidget {
     required this.awayTeam,
     required this.date,
     this.opponentLogo,
+    this.basePrice = 70.0, // Default base price
   });
 
   @override
@@ -28,40 +31,14 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   String? selectedTier;
   double? selectedPrice;
 
-  final List<Map<String, dynamic>> stands = [
-    {
-      'name': 'Sir Alex Ferguson Stand',
-      'minPrice': 85.0,
-      'tiers': [
-        {'name': 'Upper Tier', 'price': 95.0},
-        {'name': 'Lower Tier', 'price': 85.0},
-      ],
-    },
-    {
-      'name': 'East Stand',
-      'minPrice': 75.0,
-      'tiers': [
-        {'name': 'Upper Tier', 'price': 85.0},
-        {'name': 'Lower Tier', 'price': 75.0},
-      ],
-    },
-    {
-      'name': 'Stretford End',
-      'minPrice': 90.0,
-      'tiers': [
-        {'name': 'Upper Tier', 'price': 100.0},
-        {'name': 'Lower Tier', 'price': 90.0},
-      ],
-    },
-    {
-      'name': 'South Stand',
-      'minPrice': 70.0,
-      'tiers': [
-        {'name': 'Upper Tier', 'price': 80.0},
-        {'name': 'Lower Tier', 'price': 70.0},
-      ],
-    },
-  ];
+  late final List<Map<String, dynamic>> stands;
+
+  @override
+  void initState() {
+    super.initState();
+    // Generate dynamic prices based on base price
+    stands = StandConfigurations.getStandsForMatch(widget.basePrice);
+  }
 
   @override
   Widget build(BuildContext context) {

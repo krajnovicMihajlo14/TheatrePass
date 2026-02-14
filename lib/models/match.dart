@@ -3,6 +3,7 @@ class Match {
   final String homeTeam;
   final String awayTeam;
   final String date;
+  final String competition;
   final String? opponentLogo;
   final double basePrice;
 
@@ -11,6 +12,7 @@ class Match {
     required this.homeTeam,
     required this.awayTeam,
     required this.date,
+    required this.competition,
     this.opponentLogo,
     required this.basePrice,
   });

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'auth_styles.dart';
 import '../services/matches_service.dart';
 import '../models/match.dart';
+import 'add_match_page.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -97,7 +98,14 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                             // Add Match Button
                             ElevatedButton.icon(
-                              onPressed: null, // TODO: Navigate to Add Match page
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const AddMatchPage(),
+                                  ),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFDA020E),
                                 foregroundColor: Colors.white,
@@ -212,29 +220,38 @@ class _AdminPageState extends State<AdminPage> {
                         },
                       ),
                     const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${match.homeTeam} vs ${match.awayTeam}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${match.homeTeam} vs ${match.awayTeam}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  match.competition,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFFDA020E),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  match.date,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            match.date,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     // Actions
                     Row(
                       children: [
